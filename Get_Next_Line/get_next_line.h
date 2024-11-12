@@ -16,22 +16,21 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
 
-// Buffers
+// Buffer
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 60
 # endif
 
-# ifndef LINE_SIZE
-#  define LINE_SIZE 70000
-# endif
+// Structure
 
-# ifndef FD_MAX
-#  define FD_MAX 500
-# endif
+typedef struct s_buf
+{
+	char	buffer[BUFFER_SIZE];
+	int		buf_read;
+	int		buf_pos;
+}	t_buf;
 
 // get_next_line.c
 

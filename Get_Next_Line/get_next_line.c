@@ -11,28 +11,25 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-// 26 lignes !
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
-	static int	buf_read;
-	static int	buf_pos;
-	char		line[70000];
-	int			i;
+	static t_buf	buf;
+	char			line[5000];
+	int				i;
 
 	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (1)
 	{
-		if (buf_pos >= buf_read)
+		if (buf.buf_pos >= buf.buf_read)
 		{
-			buf_read = read(fd, buffer, BUFFER_SIZE);
-			buf_pos = 0;
-			if (buf_read <= 0)
+			buf.buf_read = read(fd, buf.buffer, BUFFER_SIZE);
+			buf.buf_pos = 0;
+			if (buf.buf_read <= 0)
 				break ;
 		}
-		line[i++] = buffer[buf_pos++];
+		line[i++] = buf.buffer[buf.buf_pos++];
 		if (line[i - 1] == '\n')
 			break ;
 	}
