@@ -25,6 +25,10 @@
 #  define BUFFER_SIZE 60
 # endif
 
+# ifndef LINE_SIZE
+#  define LINE_SIZE 70000
+# endif
+
 # ifndef FD_MAX
 #  define FD_MAX 500
 # endif
@@ -32,12 +36,9 @@
 // get_next_line.c
 
 char	*get_next_line(int fd);
-char	*ft_join(char *s1, char *s2, int len);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
 
 // get_next_line_utils.c
 
+char	*ft_strdup(const char *s1);
 
 #endif
