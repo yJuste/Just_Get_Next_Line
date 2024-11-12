@@ -38,7 +38,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 char	*ft_strchr(const char *s, int c)
 {
 	size_t		i;
-	
+
 	i = 0;
 	while (s[i])
 	{
