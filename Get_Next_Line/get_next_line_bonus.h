@@ -39,7 +39,6 @@ char	*ft_free(char *buffer, char *buf);
 
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlen(const char *s);
 
 #endif
