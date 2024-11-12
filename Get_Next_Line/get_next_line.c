@@ -11,78 +11,77 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t count, size_t size)
+size_t	ft_strlen(const char *s)
 {
 	size_t		i;
-	size_t		total_size;
-	void		*ptr;
 
 	i = 0;
-	if (count == 0 || size == 0)
-		total_size = 0;
-	else
-		total_size = count * size;
-	ptr = malloc(total_size);
-	if (!ptr)
-		return (NULL);
-	while (i < total_size)
-	{
-		((char *)ptr)[i] = 0;
+	while (s[i])
 		i++;
-	}
-	return (ptr);
+	return (i);
 }
 
-char	*ft_strdup(const char *s1)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char		*dest;
 	size_t		i;
 
 	i = 0;
-	while (s1[i])
-		i++;
-	dest = ft_calloc(i + 1, sizeof(char));
-	if (!dest)
+	if (!dst && !src)
 		return (NULL);
-	i = 0;
-	while (s1[i])
+	while (i < n)
 	{
-		dest[i] = s1[i];
+		((unsigned char *)dst)[i] = ((const unsigned char *)src)[i];
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (dst);
+}
+
+char	*str_join(char *s1, char *s2, int len)
+{
+	char	*new_str;
+	int		s1_len = 0;
+
+	if (s1)
+		s1_len = ft_strlen(s1);
+	new_str = malloc(s1_len + len + 1);
+	if (!new_str)
+		return (NULL);
+	if (s1)
+		ft_memcpy(new_str, s1, s1_len);
+	ft_memcpy(new_str + s1_len, s2, len);
+	new_str[s1_len + len] = '\0';
+	if (s1)
+		free(s1);
+	return (new_str);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[60];
+	static char	buffer[BUFFER_SIZE];
 	static int	buf_read;
 	static int	buf_pos;
-	char		line[50000];
-	int			i;
+	char		*line;
 
-	i = 0;
-	buf_read = 0;
-	buf_pos = 0;
-	if (fd < 0)
+	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (1)
 	{
 		if (buf_pos >= buf_read)
 		{
-			buf_read = read(fd, buffer, 60);
+			buf_read = read(fd, buffer, BUFFER_SIZE);
 			buf_pos = 0;
 			if (buf_read <= 0)
 				break ;
 		}
-		if (line[i] == '\n')
-			break ;
-		line[i++] = buffer[buf_pos++];
+		if (buffer[buf_pos] == '\n')
+		{
+			line = str_join(line, buffer + buf_pos, 1);
+			buf_pos++;
+			return (line);
+		}
+		line = str_join(line, buffer + buf_pos, 1);
+		buf_pos++;
 	}
-	line[i] = '\0';
-	if (i == 0)
-		return (NULL);
-	return (ft_strdup(line));
+	return (line);
 }
-
