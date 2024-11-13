@@ -2,7 +2,8 @@
 
 ## // INTRO
 
-* Voici le Milestone 1, le projet : get_next_line 
+* Voici le Milestone 1, le projet : get_next_line
+* Pas encore noté.
 
 ## /. HELP
 
