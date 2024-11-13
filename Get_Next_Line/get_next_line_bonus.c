@@ -13,96 +13,28 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[FD_MAX];
-	char		*line;
+	static t_buf	buf[FD_MAX];
+	char			line[5000];
+	int				i;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FD_MAX || read(fd, 0, 0) < 0)
+	i = 0;
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FD_MAX)
 		return (NULL);
-	buffer[fd] = ft_read_file(fd, buffer[fd]);
-	if (!buffer[fd])
-		return (NULL);
-	line = ft_line(buffer[fd]);
-	buffer[fd] = ft_next(buffer[fd]);
-	return (line);
-}
-
-char	*ft_read_file(int fd, char *res)
-{
-	char	*buffer;
-	int		byte_read;
-
-	if (!res)
-		res = ft_calloc(1, 1);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	byte_read = 1;
-	while (byte_read > 0)
+	while (1)
 	{
-		byte_read = read(fd, buffer, BUFFER_SIZE);
-		if (byte_read == -1)
+		if (buf[fd].buf_pos >= buf[fd].buf_read)
 		{
-			free(buffer);
-			return (NULL);
+			buf[fd].buf_read = read(fd, buf[fd].buffer, BUFFER_SIZE);
+			buf[fd].buf_pos = 0;
+			if (buf[fd].buf_read <= 0)
+				break ;
 		}
-		buffer[byte_read] = '\0';
-		res = ft_free(res, buffer);
-		if (ft_strchr(buffer, '\n'))
+		line[i++] = buf[fd].buffer[buf[fd].buf_pos++];
+		if (line[i - 1] == '\n')
 			break ;
 	}
-	free(buffer);
-	return (res);
-}
-
-char	*ft_line(char *buffer)
-{
-	char	*line;
-	int		i;
-
-	i = 0;
-	if (!buffer[i])
-		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	line = ft_calloc(i + 2, sizeof(char));
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-	{
-		line[i] = buffer[i];
-		i++;
-	}
-	if (buffer[i] && buffer[i] == '\n')
-		line[i++] = '\n';
 	line[i] = '\0';
-	return (line);
-}
-
-char	*ft_next(char *buffer)
-{
-	int		i;
-	int		j;
-	char	*line;
-
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	if (buffer[i] == '\0')
-	{
-		free(buffer);
+	if (i == 0)
 		return (NULL);
-	}
-	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
-	i++;
-	j = 0;
-	while (buffer[i])
-		line[j++] = buffer[i++];
-	free(buffer);
-	return (line);
-}
-
-char	*ft_free(char *buffer, char *buf)
-{
-	char	*temp;
-
-	temp = ft_strjoin(buffer, buf);
-	free(buffer);
-	return (temp);
+	return (ft_strdup(line));
 }

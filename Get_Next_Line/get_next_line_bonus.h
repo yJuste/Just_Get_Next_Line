@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -27,18 +27,21 @@
 #  define FD_MAX 500
 # endif
 
+// Structure
+
+typedef struct s_buf
+{
+	char	buffer[BUFFER_SIZE];
+	int		buf_read;
+	int		buf_pos;
+}	t_buf;
+
 // get_next_line_bonus.c
 
 char	*get_next_line(int fd);
-char	*ft_read_file(int fd, char *res);
-char	*ft_line(char *buffer);
-char	*ft_next(char *buffer);
-char	*ft_free(char *buffer, char *buf);
 
 // get_next_line_utils_bonus.c
 
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strchr(const char *s, int c);
-size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
 
 #endif
