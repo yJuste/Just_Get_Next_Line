@@ -35,6 +35,7 @@ typedef struct s_buf
 // get_next_line.c
 
 char	*get_next_line(int fd);
+int		ft_read_buffer(t_buf *buf, int fd);
 
 // get_next_line_utils.c
 

@@ -24,7 +24,7 @@
 # endif
 
 # ifndef FD_MAX
-#  define FD_MAX 500
+#  define FD_MAX 5000
 # endif
 
 // Structure
@@ -39,6 +39,7 @@ typedef struct s_buf
 // get_next_line_bonus.c
 
 char	*get_next_line(int fd);
+int		ft_read_buffer(t_buf *buf, int fd);
 
 // get_next_line_utils_bonus.c
 
