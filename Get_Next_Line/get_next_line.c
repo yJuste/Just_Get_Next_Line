@@ -11,19 +11,6 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-int	ft_read_buffer(t_buf *buf, int fd)
-{
-	buf->buf_read = read(fd, buf->buffer, BUFFER_SIZE);
-	buf->buf_pos = 0;
-	if (buf->buf_read == -1)
-	{
-		buf->buf_read = 0;
-		buf->buf_pos = 0;
-		return (-1);
-	}
-	return (buf->buf_read);
-}
-
 char	*get_next_line(int fd)
 {
 	static t_buf	buf;
@@ -50,4 +37,17 @@ char	*get_next_line(int fd)
 	if (i == 0)
 		return (NULL);
 	return (ft_strdup(line));
+}
+
+int	ft_read_buffer(t_buf *buf, int fd)
+{
+	buf->buf_read = read(fd, buf->buffer, BUFFER_SIZE);
+	buf->buf_pos = 0;
+	if (buf->buf_read == -1)
+	{
+		buf->buf_read = 0;
+		buf->buf_pos = 0;
+		return (-1);
+	}
+	return (buf->buf_read);
 }
