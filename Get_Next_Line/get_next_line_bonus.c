@@ -47,7 +47,7 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	line[i] = '\0';
-	if (i <= 0)
+	if (i == 0)
 		return (NULL);
 	return (ft_strdup(line));
 }
