@@ -3,7 +3,7 @@
 ## // INTRO
 
 * Voici le Milestone 1, le projet : get_next_line
-* Pas encore noté.
+* 125%
 
 ## /. HELP
 
@@ -11,4 +11,4 @@
 
 ##	/: EOF
 
-Modifié le 9 Novembre 2024 par Juste.<br>
+Modifié le 18 Novembre 2024 par Juste.<br>
